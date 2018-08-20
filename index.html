@@ -1,8 +1,8 @@
 <head>
     <style>
         body {
-            font-family: Sans-serif;
-            font-size: 11px;
+            font-family: Arial;
+            font-size: 10px;
         }
 
         .slice {
@@ -82,7 +82,7 @@
             .attr('viewBox', `${-width / 2} ${-height / 2} ${width} ${height}`)
             .on('click', () => focusOn()); // Reset zoom on canvas click
 
-        d3.json('https://gist.githubusercontent.com/TrigunaBN/050fad75767e001cdaa3ab539066eb4d/raw/96d94f018d2f99e506c99cdbf005c6f0fab23a90/schema.json', (error, root) => {
+        d3.json('https://gist.githubusercontent.com/TrigunaBN/050fad75767e001cdaa3ab539066eb4d/raw/93c0ffea9443491d164e5a2228ffc46797f82673/schema.json', (error, root) => {
             if (error) throw error;
 
             root = d3.hierarchy(root);
