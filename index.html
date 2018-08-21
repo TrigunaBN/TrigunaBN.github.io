@@ -1,5 +1,11 @@
-<head>
-    <style>
+<html>
+
+  <head>
+    <link data-require="bootstrap-css@3.1.1" data-semver="3.1.1" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+    <script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script data-require="bootstrap@*" data-semver="3.1.1" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+	    <style>
         body {
             font-family: Arial;
             font-size: 10px;
@@ -26,13 +32,58 @@
     </style>
 
     <script src='https://d3js.org/d3.v4.min.js'></script>
-</head>
-<body>
-    <script>
+  </head>
+
+  <body>
+  <a href="#openModal"><center>See Example</center></a>
+
+<div id="openModal" class="modalDialog">
+	<div>
+		<a href="#close" title="Close" class="close">X</a>
+		<div w3-include-html="Tables/Thing.html"></div>
+	</div>
+</div>
+
+<script>
+function includeHTML() {
+  var z, i, elmnt, file, xhttp;
+  /*loop through a collection of all HTML elements:*/
+  z = document.getElementsByTagName("*");
+  for (i = 0; i < z.length; i++) {
+    elmnt = z[i];
+    /*search for elements with a certain atrribute:*/
+    file = elmnt.getAttribute("w3-include-html");
+    if (file) {
+      /*make an HTTP request using the attribute value as the file name:*/
+      xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4) {
+          if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+          if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+          /*remove the attribute, and call this function once more:*/
+          elmnt.removeAttribute("w3-include-html");
+          includeHTML();
+        }
+      } 
+      xhttp.open("GET", file, true);
+      xhttp.send();
+      /*exit the function:*/
+      return;
+    }
+  }
+}
+</script>
+
+<script>
+includeHTML();
+</script>
+
+<script>
+		
         const width = window.innerWidth,
             height = window.innerHeight,
             maxRadius = (Math.min(width, height) / 2) - 5;
-
+			
         const formatNumber = d3.format(',d');
 
         const x = d3.scaleLinear()
@@ -75,7 +126,9 @@
 
             return d.data.name.length * CHAR_SPACE < perimeter;
         };
-
+		
+		
+		
         const svg = d3.select('body').append('svg')
             .style('width', '100vw')
             .style('height', '100vh')
@@ -163,6 +216,12 @@
                         if (d.parent) { moveStackToFront(d.parent); }
                     })
             }
+			
+
         }
     </script>
-</body>
+
+
+  </body>
+
+</html>
